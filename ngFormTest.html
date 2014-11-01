@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+    <g2:doctype name="html" />
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-route.js"></script>
+    </head>
+
+    <body ng-app="Record">
+
+        <div ng-controller="RecordController">
+            <ul>
+                <li ng-repeat="field in fields">
+                    {{field.display_value}}
+                </li>
+            </ul>
+        </div>
+
+    </body>
+
+    <script>
+        angular.module("Record",['RecordCtrl','ngGlideRecordService']);
+
+        angular.module("RecordCtrl",[]).controller("RecordController", ['$scope','ngGlideRecordServ', function RecordController($scope, ngGlideRecordService){
+
+            ngGlideRecordService.get("incident","a9e428cac61122760075710592216c58").then(function(res){
+                  $scope.fields = JSON.parse(res);
+            });
+
+
+        }]);
+
+    </script>
+
+    <!--Services-->
+    <script src="ngGlideRecord?ng-service"></script>
+
+</j:jelly>
